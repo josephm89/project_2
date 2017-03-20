@@ -5,20 +5,21 @@ import android.app.Dialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import java.util.Date;
 
 public class CreateNewActivity extends AppCompatActivity {
 
-  private DatePicker datePicker;
   private Calendar calendar;
   private TextView dateView;
   private int year, month, day;
-  private String newDate;
-
+  private String newDate, newName;
+  private boolean isChore;
 
 
   @Override
@@ -26,13 +27,12 @@ public class CreateNewActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_create_new);
 
-
     dateView = (TextView) findViewById(R.id.textView3);
     calendar = Calendar.getInstance();
     year = calendar.get(Calendar.YEAR);
-
     month = calendar.get(Calendar.MONTH);
     day = calendar.get(Calendar.DAY_OF_MONTH);
+
     showDate(year, month+1, day);
   }
   // \/ \/ \/ \/ \/ Fancy stuff for date picker \/ \/ \/ \/
@@ -71,7 +71,7 @@ public class CreateNewActivity extends AppCompatActivity {
 
           else {
             newString = new StringBuilder().append(arg1).append("/")
-                .append(arg2).append("/").append(arg3);
+                .append(arg2+1).append("/").append(arg3);
           }
 
 
@@ -84,5 +84,37 @@ public class CreateNewActivity extends AppCompatActivity {
     dateView.setText(new StringBuilder().append(day).append("/")
         .append(month).append("/").append(year));
   }
+
+  public void chooseToday(View v){
+    Date today = new Date();
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(today);
+    SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
+    newDate = format1.format(cal.getTime());
+
+
+
+
+
+    Log.d("new date today: ",newDate);
+
+  }
+
+  public void chooseTomorrow(View view){
+    Date today = new Date();
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(today);
+    cal.add(Calendar.DATE, 1);
+    SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
+    newDate = format1.format(cal.getTime());
+
+    Log.d("new date tomorrow: ",newDate);
+
+  }
+
+  private void saveNewToDo(){
+
+  }
+
 
 }
