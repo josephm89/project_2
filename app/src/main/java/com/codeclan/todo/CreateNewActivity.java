@@ -2,10 +2,16 @@ package com.codeclan.todo;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +21,7 @@ import java.util.Date;
 
 public class CreateNewActivity extends AppCompatActivity {
 
+  public static final String TODOES = "Todoes";
   private Calendar calendar;
   private TextView dateView;
   private int year, month, day;
@@ -91,11 +98,7 @@ public class CreateNewActivity extends AppCompatActivity {
     cal.setTime(today);
     SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
     newDate = format1.format(cal.getTime());
-
-
-
-
-
+    
     Log.d("new date today: ",newDate);
 
   }
@@ -112,8 +115,36 @@ public class CreateNewActivity extends AppCompatActivity {
 
   }
 
-  private void saveNewToDo(){
+  public void saveNewToDo(View view){
 
+    ToDo toDoToSave = new ToDo("namewillbe here",false,newDate);
+
+    SharedPreferences sharedPref = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = sharedPref.edit();
+    String toDoesString = sharedPref.getString("toDoes", null);
+    Gson gson = new Gson();
+
+    if (toDoesString != null) {
+
+      TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>(){};
+      ArrayList<ToDo> ToDoArray = gson.fromJson(toDoesString, ToDoArrayList.getType());
+
+      ToDoArray.add(toDoToSave);
+
+      editor.putString("toDoes", gson.toJson(ToDoArray));
+      editor.apply();
+
+      startActivity(new Intent(this, MainActivity.class));
+    }
+    else {
+      ArrayList<ToDo> ToDoArray = new ArrayList<>();
+      ToDoArray.add(toDoToSave);
+
+      editor.putString("toDoes", gson.toJson(ToDoArray));
+      editor.apply();
+
+      startActivity(new Intent(this, MainActivity.class));
+    }
   }
 
 
