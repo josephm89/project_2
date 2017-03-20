@@ -98,7 +98,7 @@ public class CreateNewActivity extends AppCompatActivity {
     cal.setTime(today);
     SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
     newDate = format1.format(cal.getTime());
-    
+
     Log.d("new date today: ",newDate);
 
   }
@@ -110,9 +110,7 @@ public class CreateNewActivity extends AppCompatActivity {
     cal.add(Calendar.DATE, 1);
     SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
     newDate = format1.format(cal.getTime());
-
-    Log.d("new date tomorrow: ",newDate);
-
+    
   }
 
   public void saveNewToDo(View view){

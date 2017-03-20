@@ -37,11 +37,6 @@
     android:layout_height="wrap_content"
     android:text="@string/pickDate"/>
 
-  <CalendarView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"></CalendarView>
-
-
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -52,9 +47,6 @@
     android:layout_height="wrap_content"
     android:onClick="chooseTomorrow"
     android:text="@string/buttonTomorrow"/>
-
-
-
 
   <Button
     android:id="@+id/button1"
@@ -74,6 +66,11 @@
     android:text="@string/date_selected"
     android:textAppearance="?android:attr/textAppearanceMedium" />
 
+  <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:onClick="saveNewToDo"
+    android:text="@string/save"/>
 
 
 </LinearLayout>

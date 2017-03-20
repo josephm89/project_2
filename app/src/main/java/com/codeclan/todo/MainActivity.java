@@ -20,51 +20,36 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
   public static final String TODOES = "Todoes";
-  ArrayList<ToDo> toDoListStart;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-
-    // \/ \/ \/ \/ \/ Temporary until welcome screen \/ \/ \/ \/ \/ \/ \/
-    toDoListStart = new ArrayList<ToDo>();
-    toDoListStart.add(new ToDo("laundry",true,"2017-03-20"));
-    toDoListStart.add(new ToDo("launddry",true,"2017-03-21"));
-    toDoListStart.add(new ToDo("ladundry",true,"2017-03-22"));
-    toDoListStart.add(new ToDo("laundr5y",true,"2017-04-20"));
-
-    SharedPreferences sharedPrefTemp = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
-    SharedPreferences.Editor editorTemp = sharedPrefTemp.edit();
-
-    Gson gsonTemp = new Gson();
-
-    editorTemp.putString("toDoes", gsonTemp.toJson(toDoListStart));
-    editorTemp.apply();
-    // /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\
+//    SharedPreferences delete = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
+//    delete.edit().clear().commit();  ///leave here to clear
 
 
-
-    // \/ \/ \/ \/ \/ Get Array from SharedPrefs \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
     SharedPreferences sharedPref = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
-    String todoes99 = sharedPref.getString("toDoes", "empty");
-
+    String toDoString = sharedPref.getString("toDoes", null);
+    SharedPreferences.Editor editor = sharedPref.edit();
     Gson gson = new Gson();
+      if (toDoString != null) {
 
-    TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>(){};
-    ArrayList<ToDo> ToDoArray11 = gson.fromJson(todoes99, ToDoArrayList.getType());
-    // /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\
+        TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {};
 
+        ArrayList<ToDo> toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
 
-    // \/ \/ \/ \/ \/ Stuff stuff into listView #ArrayAdapter \/ \/ \/ \/ \/ \/ \/
-    ToDoAdapter toDoAdapter = new ToDoAdapter(this, ToDoArray11);
+        editor.putString("toDoes", gson.toJson(toDoArray));
+        editor.apply();
 
-    ListView listView = (ListView) findViewById(R.id.myListView);
+        ToDoAdapter toDoAdapter = new ToDoAdapter(this, toDoArray);
 
-    listView.setAdapter(toDoAdapter);
-    // /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\
+        ListView listView = (ListView) findViewById(R.id.myListView);
 
+        listView.setAdapter(toDoAdapter);
+        // /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\
+      }
 
   }
 
