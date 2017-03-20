@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
@@ -19,15 +20,29 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
   public static final String TODOES = "Todoes";
-  ArrayList<ToDo> toDoList;
+  ArrayList<ToDo> toDoListStart;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    toDoList = new ArrayList<ToDo>();
-    toDoList.add(new ToDo("laundry",true,"2017-03-20");
+    toDoListStart = new ArrayList<ToDo>();
+    toDoListStart.add(new ToDo("laundry",true,"2017-03-20"));
+    toDoListStart.add(new ToDo("launddry",true,"2017-03-21"));
+    toDoListStart.add(new ToDo("ladundry",true,"2017-03-22"));
+    toDoListStart.add(new ToDo("laundr5y",true,"2017-04-20"));
+
+    SharedPreferences sharedPrefTemp = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
+    SharedPreferences.Editor editorTemp = sharedPrefTemp.edit();
+
+    Gson gsonTemp = new Gson();
+
+    editorTemp.putString("toDoes", gsonTemp.toJson(toDoListStart));
+    editorTemp.apply();
+
+
+
 
 ///////////////////////////////////////////////////////
 
@@ -39,13 +54,24 @@ public class MainActivity extends AppCompatActivity {
     TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>(){};
     ArrayList<ToDo> ToDoArray11 = gson.fromJson(todoes99, ToDoArrayList.getType());
 
-    TextView list = (TextView)findViewById(R.id.//**todo make layout pls);**//
-        ;
-    String toDoString = "";
-    for(ToDo todo : ToDoArray11) {
-      toDoString += todo.getName() + " " + todo.getDueDate() + "\r\n";
-    }
-    list.setText(toDoString);
+//////////////////////^^^^^^^^ todo is taken from sharedprefs  ////////////////
+
+
+//    String toDoString = "";
+//    for(ToDo todo : ToDoArray11) {
+//      toDoString += todo.getName() + " " + todo.getDueDate() + "\r\n";
+//    }
+
+    ToDoAdapter toDoAdapter = new ToDoAdapter(this, ToDoArray11);
+
+    ListView listView = (ListView) findViewById(R.id.myListView);
+
+    listView.setAdapter(toDoAdapter);
+
+
+//////////////////////////////////////////////////////////////////////////
+
+
   }
 
 
@@ -58,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     Gson gson = new Gson();
 
-    editor.putString("toDoes", gson.toJson(toDoList));
+    editor.putString("toDoes", gson.toJson(toDoListStart));
     editor.apply();
 
 

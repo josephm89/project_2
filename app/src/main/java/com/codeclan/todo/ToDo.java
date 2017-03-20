@@ -29,11 +29,11 @@ public class ToDo {
     this.chore = chore;
   }
 
-  public Date getDueDate() {
+  public String getDueDate() {
     return dueDate;
   }
 
-  public void setDueDate(Date dueDate) {
+  public void setDueDate(String dueDate) {
     this.dueDate = dueDate;
   }
 }
