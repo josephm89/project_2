@@ -2,12 +2,12 @@ package com.codeclan.todo;
 
 import java.util.Date;
 
-public class Todo {
+public class ToDo {
   private String name;
   private Boolean chore;
-  private Date dueDate;
+  private String dueDate;
 
-  public Todo(String name, Boolean chore, Date dueDate) {
+  public ToDo(String name, Boolean chore, String dueDate) {
     this.name = name;
     this.chore = chore;
     this.dueDate = dueDate;
