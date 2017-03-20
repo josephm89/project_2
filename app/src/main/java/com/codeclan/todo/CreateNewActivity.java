@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,9 +23,11 @@ import java.util.Date;
 public class CreateNewActivity extends AppCompatActivity {
 
   public static final String TODOES = "Todoes";
+
   private Calendar calendar;
   private TextView dateView;
   private int year, month, day;
+
   private String newDate, newName;
   private boolean isChore;
 
@@ -92,6 +95,19 @@ public class CreateNewActivity extends AppCompatActivity {
         .append(month).append("/").append(year));
   }
 
+  // /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\
+
+  public void setToDoName(){
+    EditText inputWindow = (EditText)findViewById(R.id.editTextName);
+    newName = inputWindow.getText().toString();
+  }
+
+  public void isChore(){
+
+  }
+
+
+
   public void chooseToday(View v){
     Date today = new Date();
     Calendar cal = Calendar.getInstance();
@@ -110,12 +126,15 @@ public class CreateNewActivity extends AppCompatActivity {
     cal.add(Calendar.DATE, 1);
     SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
     newDate = format1.format(cal.getTime());
-    
+
   }
 
   public void saveNewToDo(View view){
 
-    ToDo toDoToSave = new ToDo("namewillbe here",false,newDate);
+    setToDoName();
+    //todo set boolean()
+
+    ToDo toDoToSave = new ToDo(newName,false,newDate);
 
     SharedPreferences sharedPref = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
     SharedPreferences.Editor editor = sharedPref.edit();
@@ -123,6 +142,7 @@ public class CreateNewActivity extends AppCompatActivity {
     Gson gson = new Gson();
 
     if (toDoesString != null) {
+
 
       TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>(){};
       ArrayList<ToDo> ToDoArray = gson.fromJson(toDoesString, ToDoArrayList.getType());
@@ -135,6 +155,8 @@ public class CreateNewActivity extends AppCompatActivity {
       startActivity(new Intent(this, MainActivity.class));
     }
     else {
+
+
       ArrayList<ToDo> ToDoArray = new ArrayList<>();
       ToDoArray.add(toDoToSave);
 
