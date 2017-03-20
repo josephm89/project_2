@@ -3,4 +3,11 @@
   <string name="createnew">Create New</string>
   <string name="today">Today</string>
   <string name="tomorrow">Tomorrow</string>
+  <string name="name">Add Name</string>
+  <string name="isChore">Remainder</string>
+  <string name="pickDate">Select a date</string>
+  <string name="buttonToday">Today</string>
+  <string name="buttonTomorrow">Tomorrow</string>
+  <string name="date_button_set">Set date</string>
+  <string name="date_selected">selected date</string>
 </resources>
