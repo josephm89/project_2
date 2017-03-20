@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+
+    // \/ \/ \/ \/ \/ Temporary until welcome screen \/ \/ \/ \/ \/ \/ \/
     toDoListStart = new ArrayList<ToDo>();
     toDoListStart.add(new ToDo("laundry",true,"2017-03-20"));
     toDoListStart.add(new ToDo("launddry",true,"2017-03-21"));
@@ -40,12 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
     editorTemp.putString("toDoes", gsonTemp.toJson(toDoListStart));
     editorTemp.apply();
+    // /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\
 
 
 
-
-///////////////////////////////////////////////////////
-
+    // \/ \/ \/ \/ \/ Get Array from SharedPrefs \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/
     SharedPreferences sharedPref = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
     String todoes99 = sharedPref.getString("toDoes", "empty");
 
@@ -53,23 +54,16 @@ public class MainActivity extends AppCompatActivity {
 
     TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>(){};
     ArrayList<ToDo> ToDoArray11 = gson.fromJson(todoes99, ToDoArrayList.getType());
+    // /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\
 
-//////////////////////^^^^^^^^ todo is taken from sharedprefs  ////////////////
 
-
-//    String toDoString = "";
-//    for(ToDo todo : ToDoArray11) {
-//      toDoString += todo.getName() + " " + todo.getDueDate() + "\r\n";
-//    }
-
+    // \/ \/ \/ \/ \/ Stuff stuff into listView #ArrayAdapter \/ \/ \/ \/ \/ \/ \/
     ToDoAdapter toDoAdapter = new ToDoAdapter(this, ToDoArray11);
 
     ListView listView = (ListView) findViewById(R.id.myListView);
 
     listView.setAdapter(toDoAdapter);
-
-
-//////////////////////////////////////////////////////////////////////////
+    // /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\
 
 
   }
@@ -77,19 +71,24 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-  public void addToDoToSharedPreferences(View view){
 
-    SharedPreferences sharedPref = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
-    SharedPreferences.Editor editor = sharedPref.edit();
 
-    Gson gson = new Gson();
 
-    editor.putString("toDoes", gson.toJson(toDoListStart));
-    editor.apply();
-
+//
+//   todo  add this stuff to create new
+//  public void addToDoToSharedPreferences(View view){
+//
+//    SharedPreferences sharedPref = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
+//    SharedPreferences.Editor editor = sharedPref.edit();
+//
+//    Gson gson = new Gson();
+//
+//    editor.putString("toDoes", gson.toJson(toDoListStart));
+//    editor.apply();
+   // todo ^^^^^^^^^^^^^^^^^^^^^^^^
 
    ////// Toast.makeText(MainActivity.this, "stuff added", Toast.LENGTH_LONG).show();
-  }
+  //}
 
 
 //  @Override
