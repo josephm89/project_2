@@ -25,7 +25,7 @@ public class CreateNewActivity extends AppCompatActivity {
   public static final String TODOES = "Todoes";
 
   private Calendar calendar;
-  private TextView dateView;
+  //private TextView dateView;
   private int year, month, day;
 
   private String newDate, newName;
@@ -37,13 +37,13 @@ public class CreateNewActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_create_new);
 
-    dateView = (TextView) findViewById(R.id.textView3);
+   // dateView = (TextView) findViewById(R.id.textView3);
     calendar = Calendar.getInstance();
     year = calendar.get(Calendar.YEAR);
     month = calendar.get(Calendar.MONTH);
     day = calendar.get(Calendar.DAY_OF_MONTH);
 
-    showDate(year, month+1, day);
+  //  showDate(year, month+1, day);
   }
   // \/ \/ \/ \/ \/ Fancy stuff for date picker \/ \/ \/ \/
   @SuppressWarnings("deprecation")
@@ -68,7 +68,7 @@ public class CreateNewActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker arg0,
             int arg1, int arg2, int arg3) {
-          showDate(arg1, arg2+1, arg3);
+          //showDate(arg1, arg2+1, arg3);
 
           StringBuilder newString;
 
@@ -90,10 +90,10 @@ public class CreateNewActivity extends AppCompatActivity {
         }
       };
 
-  private void showDate(int year, int month, int day) {
-    dateView.setText(new StringBuilder().append(day).append("/")
-        .append(month).append("/").append(year));
-  }
+//  private void showDate(int year, int month, int day) {
+//    dateView.setText(new StringBuilder().append(day).append("/")
+//        .append(month).append("/").append(year));
+//  }
 
   // /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\
 
