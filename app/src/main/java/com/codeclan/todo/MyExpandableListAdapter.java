@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+import java.util.Collections;
 
 public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -25,7 +26,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     this.toDoes = toDoes;
   }
 
-  @Override ///pipa
+  @Override
   public int getGroupCount() {
     return toDoes.length;
   }
@@ -35,7 +36,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     return 1;
   }
 
-  @Override /////pipa
+  @Override
   public Object getGroup(int groupPosition) {
     return toDoes[groupPosition];
   }
@@ -45,7 +46,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     return null;
   }
 
-  @Override /////pipa
+  @Override
   public long getGroupId(int groupPosition) {
     return groupPosition;
   }
@@ -65,7 +66,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
 
   @Override
-  public View getGroupView(int groupPosition, boolean isExpanded, View convertView,
+  public View getGroupView(final int groupPosition, boolean isExpanded, View convertView,
       ViewGroup parent) {
     if(convertView == null) {
       LayoutInflater layoutInflater = (LayoutInflater) this.context
@@ -74,6 +75,39 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     }
     TextView listName = (TextView) convertView.findViewById(R.id.listTitle);
     listName.setText(toDoes[groupPosition]);
+
+    Button moveDown = (Button) convertView.findViewById(R.id.moveDown);
+    moveDown.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+
+//        String temp =  toDoes[groupPosition+1];
+//        toDoes[groupPosition+1] = toDoes[groupPosition];
+//        toDoes[groupPosition] = temp;
+
+        //get the todo classes
+        SharedPreferences sharedPref = context.getSharedPreferences(TODOES,Context.MODE_PRIVATE);
+        String toDoString = sharedPref.getString("toDoes", null);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        Gson gson = new Gson();
+
+        TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {};
+        ArrayList<ToDo> toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
+
+        Collections.swap(toDoArray, groupPosition, groupPosition+1);
+
+        editor.putString("toDoes", gson.toJson(toDoArray));
+        editor.apply();
+
+
+
+        ///save shared prefs
+
+        context.startActivity(new Intent(context, MainActivity.class));
+      }
+    });
+
+
     return convertView;
   }
 
@@ -85,34 +119,20 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
           .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       convertView = layoutInflater.inflate(R.layout.list_item, null);
     }
-//    TextView listName2 = (TextView) convertView.findViewById(R.id.childStuff);
-//    listName2.setText("eh");
-
       Button delete = (Button) convertView.findViewById(R.id.childDelete);
       delete.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          //todo delete from sharedprefs
-              Log.d("clicked","yeaah");
-              Log.d("clicked",Integer.toString((groupPosition)));
-
-
 
           String nameToDelete = toDoes[groupPosition];
-
-          Log.d("name to del",nameToDelete);
 
           SharedPreferences sharedPref = context.getSharedPreferences(TODOES,Context.MODE_PRIVATE);
           String toDoString = sharedPref.getString("toDoes", null);
           SharedPreferences.Editor editor = sharedPref.edit();
           Gson gson = new Gson();
 
-            TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {};
-
-            ArrayList<ToDo> toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
-
-          //Log.d("name to delbefore",toDoArray.toString());
-          //Log.d("name to del",Integer.toString(toDoArray.size()));
+          TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {};
+          ArrayList<ToDo> toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
 
           for (ToDo todo: toDoArray){
             if (todo.getName().equals(nameToDelete)){
@@ -122,31 +142,6 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
             }
           }
           context.startActivity(new Intent(context,MainActivity.class));
-
-
-
-
-          //Log.d("name to del",Integer.toString(toDoArray.size()));
-
-
-
-//          String toDoName = toDoArrayList.getName();
-//          for (String items:toDoes){
-//              if(items.equals(toDoName)) {
-//              int pos = items.indexOf();
-//            }
-//          }
-
-//          for (int i = 0; i < Types.length; i++) {
-//            if(TYPES[i].equals(userString)){
-//              return i;
-//            }
-//          }
-
-
-
-          ///_listDataChild.get(_listDataHeader.get(groupPosition)).remove(childPosition);
-
         }
       });
 
@@ -156,9 +151,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     return convertView;
   }
 
-
   ///////////////////////////////////////////////////
-
 
   @Override
   public boolean isChildSelectable(int groupPosition, int childPosition) {

@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         for(String elem : stringArray) {
           Log.d("naa", elem);
         }
+
         ////////////////////// custom adapter////////////////////////////////////////
         ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
         ExpandableListAdapter expandableListAdapter = new MyExpandableListAdapter(this, stringArray);
