@@ -97,6 +97,33 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         }
       }
     });
+
+    Button moveUp = (Button) convertView.findViewById(R.id.moveUp);
+    moveUp.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (groupPosition!=0) {
+          SharedPreferences sharedPref = context.getSharedPreferences(TODOES, Context.MODE_PRIVATE);
+          String toDoString = sharedPref.getString("toDoes", null);
+          SharedPreferences.Editor editor = sharedPref.edit();
+          Gson gson = new Gson();
+
+          TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {
+          };
+          ArrayList<ToDo> toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
+
+          Collections.swap(toDoArray, groupPosition, groupPosition - 1);
+
+          editor.putString("toDoes", gson.toJson(toDoArray));
+          editor.apply();
+
+          context.startActivity(new Intent(context, MainActivity.class));
+        }
+      }
+    });
+
+
+
     return convertView;
   }
 

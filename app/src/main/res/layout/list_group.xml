@@ -1,27 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
+  android:orientation="horizontal"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/listTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textColor="@android:color/black"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:layout_gravity="right">
+
+        <Button
+          android:layout_gravity="top"
+          android:id="@+id/moveUp"
+          android:focusable="false"
+          android:background="@drawable/swapbuttonup"
+          android:layout_width="30dp"
+          android:layout_height="30dp" />
 
 
         <Button
-          android:layout_gravity="right"
+          android:layout_gravity="bottom"
           android:id="@+id/moveDown"
+          android:background="@drawable/swapbuttondown"
           android:focusable="false"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Down"/>
+          android:layout_width="30dp"
+          android:layout_height="30dp"/>
+    </LinearLayout>
 
-
+    <TextView
+        android:id="@+id/listTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_marginLeft="30dp"
+        android:padding="10dp"
+        android:layout_gravity="center_vertical"
+      />
 </LinearLayout>
 

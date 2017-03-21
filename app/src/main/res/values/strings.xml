@@ -12,4 +12,5 @@
   <string name="date_selected">selected date</string>
   <string name="save">Add to list</string>
   <string name="saveName">Save Name</string>
+  <string name="add">Add New</string>
 </resources>
