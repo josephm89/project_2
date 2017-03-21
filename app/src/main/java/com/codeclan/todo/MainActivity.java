@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
     Gson gsonToday = new Gson();
     Gson gsonTomorrow = new Gson();
     Gson gsonRest = new Gson();
-    ArrayList<ToDo> newTodayToDoArray = null;
-    ArrayList<ToDo> newTomorrowToDoArray = null;
-    ArrayList<ToDo> newRestToDoArray = null;
+    ArrayList<ToDo> newTodayToDoArray = new ArrayList<>();
+    ArrayList<ToDo> newTomorrowToDoArray = new ArrayList<>();
+    ArrayList<ToDo> newRestToDoArray = new ArrayList<>();
 
 
     //////////////Check today's stuff////////////////////////////////////
@@ -69,18 +69,35 @@ public class MainActivity extends AppCompatActivity {
 
       for(ToDo todo:todayToDoArray){
 
+          Log.d("Something","here");
+
+
           Calendar calendar = Calendar.getInstance();
+          calendar.set(Calendar.HOUR, 0);
+          calendar.set(Calendar.MINUTE, 0);
+          calendar.set(Calendar.SECOND, 0);
+          calendar.set(Calendar.MILLISECOND, 0);
+          calendar.set(Calendar.HOUR_OF_DAY, 0);
           Date today = calendar.getTime();
+
+        Log.d("Something",today.toString());
+
+
+
 
           calendar.add(Calendar.DAY_OF_YEAR, 1);
           Date tomorrow = calendar.getTime();
+        Log.d("Something",tomorrow.toString());
+
 
           Date date = null;
-
+        Log.d("Something","after date");
           try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             date = dateFormat.parse(todo.getDueDate());
+            Log.d("Something",todo.getDueDate());
 
+            Log.d("whats date",date.toString());
           } catch (ParseException e) {
             e.printStackTrace();
           }
@@ -92,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
             newTomorrowToDoArray.add(todo);
           }
           else{
+            Log.d("whats in else",todo.toString());
+            Log.d("whats in else",todo.getDueDate());
             newRestToDoArray.add(todo);
           }
       }

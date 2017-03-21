@@ -22,7 +22,7 @@ import java.util.Date;
 
 public class CreateNewActivity extends AppCompatActivity {
 
-  public static final String TODOES = "Todoes";
+  public static final String TODAY = "today";
 
   private Calendar calendar;
   //private TextView dateView;
@@ -136,9 +136,9 @@ public class CreateNewActivity extends AppCompatActivity {
 
     ToDo toDoToSave = new ToDo(newName,false,newDate);
 
-    SharedPreferences sharedPref = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
+    SharedPreferences sharedPref = getSharedPreferences(TODAY, Context.MODE_PRIVATE);
     SharedPreferences.Editor editor = sharedPref.edit();
-    String toDoesString = sharedPref.getString("toDoes", null);
+    String toDoesString = sharedPref.getString("today", null);
     Gson gson = new Gson();
 
     if (toDoesString != null) {
@@ -149,7 +149,7 @@ public class CreateNewActivity extends AppCompatActivity {
 
       ToDoArray.add(toDoToSave);
 
-      editor.putString("toDoes", gson.toJson(ToDoArray));
+      editor.putString("today", gson.toJson(ToDoArray));
       editor.apply();
 
       startActivity(new Intent(this, MainActivity.class));
@@ -160,7 +160,7 @@ public class CreateNewActivity extends AppCompatActivity {
       ArrayList<ToDo> ToDoArray = new ArrayList<>();
       ToDoArray.add(toDoToSave);
 
-      editor.putString("toDoes", gson.toJson(ToDoArray));
+      editor.putString("today", gson.toJson(ToDoArray));
       editor.apply();
 
       startActivity(new Intent(this, MainActivity.class));
