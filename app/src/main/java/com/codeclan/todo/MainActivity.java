@@ -263,11 +263,29 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.action_create_new){
-      Intent intent = new Intent(this, CreateNewActivity.class);
-      startActivity(intent);
-      return true;
+    switch(item.getItemId()) {
+      case R.id.action_create_new:
+        Intent intent = new Intent(this, CreateNewActivity.class);
+        startActivity(intent);
+        break;
+      case R.id.action_tomorrow:
+        intent = new Intent(this, TomorrowActivity.class);
+        startActivity(intent);
+        break;
+      case R.id.action_today:
+        intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        break;
+      case R.id.action_rest:
+        intent = new Intent(this, RestActivity.class);
+        startActivity(intent);
+        break;
+      default:
+        return super.onOptionsItemSelected(item);
     }
-    return super.onOptionsItemSelected(item);
+
+    return true;
   }
+
+
 }

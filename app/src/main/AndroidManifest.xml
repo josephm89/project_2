@@ -19,6 +19,8 @@
       </intent-filter>
     </activity>
     <activity android:name=".CreateNewActivity"></activity>
+    <activity android:name=".TomorrowActivity"></activity>
+    <activity android:name=".RestActivity"></activity>
   </application>
 
 </manifest>

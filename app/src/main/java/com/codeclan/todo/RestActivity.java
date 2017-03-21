@@ -14,9 +14,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 
-public class TomorrowActivity extends AppCompatActivity {
+public class RestActivity extends AppCompatActivity {
 
-  public static final String TOMORROW = "tomorrow";
+  public static final String REST = "rest";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +26,8 @@ public class TomorrowActivity extends AppCompatActivity {
 //    SharedPreferences delete = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
 //    delete.edit().clear().commit();  ///leave here to clear
 
-    SharedPreferences sharedPref = getSharedPreferences(TOMORROW, Context.MODE_PRIVATE);
-    String toDoString = sharedPref.getString("tomorrow", null);
+    SharedPreferences sharedPref = getSharedPreferences(REST, Context.MODE_PRIVATE);
+    String toDoString = sharedPref.getString("rest", null);
     SharedPreferences.Editor editor = sharedPref.edit();
     Gson gson = new Gson();
 
@@ -37,7 +37,7 @@ public class TomorrowActivity extends AppCompatActivity {
 
         ArrayList<ToDo> toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
 
-        editor.putString("toDoes", gson.toJson(toDoArray));
+        editor.putString("rest", gson.toJson(toDoArray));
         editor.apply();
         ////////////////////////create string array for the adapter/////////////////////////
         int length = toDoArray.size();
@@ -83,7 +83,7 @@ public class TomorrowActivity extends AppCompatActivity {
         startActivity(intent);
         break;
       case R.id.action_tomorrow:
-        intent = new Intent(this, TomorrowActivity.class);
+        intent = new Intent(this, RestActivity.class);
         startActivity(intent);
         break;
       case R.id.action_today:

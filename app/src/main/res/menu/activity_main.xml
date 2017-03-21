@@ -13,7 +13,13 @@
 
   <item
     android:id="@+id/action_tomorrow"
+
     android:title="@string/tomorrow" />
+
+  <item
+    android:id="@+id/action_rest"
+
+    android:title="@string/rest" />
 
 </menu>
 
