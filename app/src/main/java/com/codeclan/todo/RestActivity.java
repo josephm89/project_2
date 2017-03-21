@@ -83,7 +83,7 @@ public class RestActivity extends AppCompatActivity {
         startActivity(intent);
         break;
       case R.id.action_tomorrow:
-        intent = new Intent(this, RestActivity.class);
+        intent = new Intent(this, TomorrowActivity.class);
         startActivity(intent);
         break;
       case R.id.action_today:

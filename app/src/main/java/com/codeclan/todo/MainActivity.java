@@ -69,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
       for(ToDo todo:todayToDoArray){
 
-          Log.d("Something","here");
-
-
           Calendar calendar = Calendar.getInstance();
           calendar.set(Calendar.HOUR, 0);
           calendar.set(Calendar.MINUTE, 0);
@@ -80,18 +77,11 @@ public class MainActivity extends AppCompatActivity {
           calendar.set(Calendar.HOUR_OF_DAY, 0);
           Date today = calendar.getTime();
 
-        Log.d("Something",today.toString());
-
-
-
-
           calendar.add(Calendar.DAY_OF_YEAR, 1);
           Date tomorrow = calendar.getTime();
-        Log.d("Something",tomorrow.toString());
-
 
           Date date = null;
-        Log.d("Something","after date");
+
           try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             date = dateFormat.parse(todo.getDueDate());
@@ -127,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
       for(ToDo todo:tomorrowToDoArray){
 
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
         Date today = calendar.getTime();
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
@@ -165,6 +160,11 @@ public class MainActivity extends AppCompatActivity {
       for(ToDo todo:restToDoArray){
 
         Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
         Date today = calendar.getTime();
 
         calendar.add(Calendar.DAY_OF_YEAR, 1);
