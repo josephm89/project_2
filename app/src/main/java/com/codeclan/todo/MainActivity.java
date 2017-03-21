@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 //    SharedPreferences delete = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
 //    delete.edit().clear().commit();  ///leave here to clear
 
-
     SharedPreferences sharedPref = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
     String toDoString = sharedPref.getString("toDoes", null);
     SharedPreferences.Editor editor = sharedPref.edit();
@@ -42,12 +44,35 @@ public class MainActivity extends AppCompatActivity {
 
         editor.putString("toDoes", gson.toJson(toDoArray));
         editor.apply();
+        /////////////////////////////////////////////////////////////
+        int length = toDoArray.size();
+        String[] stringArray = new String[length];
+        int count = 0;
+          while (count < length) {
+              for(ToDo item : toDoArray) {
+              stringArray[count] = item.getName();
+          count++;
+          }
+        }
 
-        ToDoAdapter toDoAdapter = new ToDoAdapter(this, toDoArray);
+        for(String elem : stringArray) {
+          Log.d("naa", elem);
+        }
 
-        ListView listView = (ListView) findViewById(R.id.myListView);
+        ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+        ExpandableListAdapter expandableListAdapter = new MyExpandableListAdapter(this, stringArray);
 
-        listView.setAdapter(toDoAdapter);
+        expandableListView.setAdapter(expandableListAdapter);
+
+
+    ///////BACKUPPPPP///////////////////////////////////////////////////////
+//        ToDoAdapter toDoAdapter = new ToDoAdapter(this, toDoArray);
+//
+//        ListView listView = (ListView) findViewById(R.id.myListView);
+//
+//        listView.setAdapter(toDoAdapter);
+
+
         // /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\
       }
 

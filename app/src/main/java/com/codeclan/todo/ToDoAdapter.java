@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class ToDoAdapter extends ArrayAdapter<ToDo> {
 
   public ToDoAdapter(Context context, ArrayList<ToDo> todoes) {
+
     super(context, 0, todoes);
   }
 
