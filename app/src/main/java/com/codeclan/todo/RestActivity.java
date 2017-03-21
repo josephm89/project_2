@@ -22,7 +22,7 @@ public class RestActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-
+    setTitle("Later");
 //    SharedPreferences delete = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
 //    delete.edit().clear().commit();  ///leave here to clear
 

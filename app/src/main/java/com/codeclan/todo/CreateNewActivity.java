@@ -36,7 +36,7 @@ public class CreateNewActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_create_new);
-
+    setTitle("Create New");
    // dateView = (TextView) findViewById(R.id.textView3);
     calendar = Calendar.getInstance();
     year = calendar.get(Calendar.YEAR);
