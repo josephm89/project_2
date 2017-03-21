@@ -5,7 +5,8 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   tools:context="com.codeclan.todo.CreateNewActivity"
-  android:orientation="vertical">
+  android:orientation="vertical"
+  android:background="@drawable/bgmain">
 
 
   <TextView
@@ -13,6 +14,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/name"
+    android:textSize="26dp"
+    android:textColor="@color/colorPrimary"
     android:layout_gravity="center_horizontal"/>
 
 
@@ -22,26 +25,33 @@
     android:layout_height="wrap_content"
     android:ems="10"
     android:inputType="text"
+    android:background="@color/colorPrimaryDark"
     android:layout_gravity="center_horizontal"
      />
 
   <TextView
     android:layout_marginTop="30dp"
+    android:textSize="26dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/isChore"
+    android:textColor="@color/colorPrimary"
     android:layout_gravity="center_horizontal"/>
 
   <CheckBox
     android:id="@+id/checkbox"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:shadowColor="#ffffff"
     android:layout_gravity="center_horizontal"/>
 
   <TextView
     android:layout_marginTop="30dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:textSize="26dp"
+    android:textColor="@color/colorPrimary"
     android:layout_gravity="center_horizontal"
     android:text="@string/pickDate"/>
   <LinearLayout
@@ -53,10 +63,12 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:onClick="chooseToday"
+      android:background="@color/colorPrimary"
       android:text="@string/buttonToday"/>
     <Button
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:background="@color/colorPrimary"
       android:onClick="chooseTomorrow"
       android:text="@string/buttonTomorrow" />
     <Button
@@ -64,6 +76,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:onClick="setDate"
+      android:background="@color/colorPrimary"
       android:text="@string/date_button_set" />
   </LinearLayout>
   <Button
