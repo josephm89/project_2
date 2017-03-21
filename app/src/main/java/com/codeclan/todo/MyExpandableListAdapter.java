@@ -21,6 +21,12 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
   private String[] toDoes;
   public static final String TODOES = "Todoes";
 
+
+
+
+
+
+
   public MyExpandableListAdapter(Context context, String[] toDoes) {
     this.context = context;
     this.toDoes = toDoes;
@@ -126,22 +132,26 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
           String nameToDelete = toDoes[groupPosition];
 
-          SharedPreferences sharedPref = context.getSharedPreferences(TODOES,Context.MODE_PRIVATE);
-          String toDoString = sharedPref.getString("toDoes", null);
-          SharedPreferences.Editor editor = sharedPref.edit();
-          Gson gson = new Gson();
+          SharedPreferences sharedPref1 = context.getSharedPreferences(TODOES,Context.MODE_PRIVATE);
+          String toDoString1 = sharedPref1.getString("toDoes", null);
+          SharedPreferences.Editor editor1 = sharedPref1.edit();
+          Gson gson1 = new Gson();
 
-          TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {};
-          ArrayList<ToDo> toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
-
-          for (ToDo todo: toDoArray){
+          TypeToken<ArrayList<ToDo>> ToDoArrayList1 = new TypeToken<ArrayList<ToDo>>() {};
+          ArrayList<ToDo> toDoArray1 = gson1.fromJson(toDoString1, ToDoArrayList1.getType());
+          ToDo toDelete = null;
+          for (ToDo todo: toDoArray1){
             if (todo.getName().equals(nameToDelete)){
-              toDoArray.remove(todo);
-              editor.putString("toDoes", gson.toJson(toDoArray));
-              editor.apply();
+              toDelete = todo;
             }
           }
-          context.startActivity(new Intent(context,MainActivity.class));
+
+              toDoArray1.remove(toDelete);
+              editor1.putString("toDoes", gson1.toJson(toDoArray1));
+              editor1.apply();
+
+              context.startActivity(new Intent(context,MainActivity.class));
+
         }
       });
 
