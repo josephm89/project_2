@@ -86,30 +86,23 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     moveDown.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        if (toDoes.length-1>groupPosition) {
+          SharedPreferences sharedPref = context.getSharedPreferences(TODOES, Context.MODE_PRIVATE);
+          String toDoString = sharedPref.getString("toDoes", null);
+          SharedPreferences.Editor editor = sharedPref.edit();
+          Gson gson = new Gson();
 
-//        String temp =  toDoes[groupPosition+1];
-//        toDoes[groupPosition+1] = toDoes[groupPosition];
-//        toDoes[groupPosition] = temp;
+          TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {
+          };
+          ArrayList<ToDo> toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
 
-        //get the todo classes
-        SharedPreferences sharedPref = context.getSharedPreferences(TODOES,Context.MODE_PRIVATE);
-        String toDoString = sharedPref.getString("toDoes", null);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        Gson gson = new Gson();
+          Collections.swap(toDoArray, groupPosition, groupPosition + 1);
 
-        TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {};
-        ArrayList<ToDo> toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
+          editor.putString("toDoes", gson.toJson(toDoArray));
+          editor.apply();
 
-        Collections.swap(toDoArray, groupPosition, groupPosition+1);
-
-        editor.putString("toDoes", gson.toJson(toDoArray));
-        editor.apply();
-
-
-
-        ///save shared prefs
-
-        context.startActivity(new Intent(context, MainActivity.class));
+          context.startActivity(new Intent(context, MainActivity.class));
+        }
       }
     });
 
@@ -146,11 +139,10 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
             }
           }
 
-              toDoArray1.remove(toDelete);
-              editor1.putString("toDoes", gson1.toJson(toDoArray1));
-              editor1.apply();
-
-              context.startActivity(new Intent(context,MainActivity.class));
+          toDoArray1.remove(toDelete);
+          editor1.putString("toDoes", gson1.toJson(toDoArray1));
+          editor1.apply();
+          context.startActivity(new Intent(context,MainActivity.class));
 
         }
       });
