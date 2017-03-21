@@ -52,12 +52,8 @@ public class MainActivity extends AppCompatActivity {
               for(ToDo item : toDoArray) {
               stringArray[count] = item.getName();
           count++;
+            }
           }
-        }
-        ///////////////////////////////////////////////////////////
-        for(String elem : stringArray) {
-          Log.d("naa", elem);
-        }
 
         ////////////////////// custom adapter////////////////////////////////////////
         ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
@@ -66,19 +62,16 @@ public class MainActivity extends AppCompatActivity {
         expandableListView.setAdapter(expandableListAdapter);
 
 
-    ///////BACKUPPPPP///for normal list view adapter//////////////////////////////////
+        /////////////////////backup for normal list view adapter//////////////////////////////////
 //        ToDoAdapter toDoAdapter = new ToDoAdapter(this, toDoArray);
 //
 //        ListView listView = (ListView) findViewById(R.id.myListView);
 //
 //        listView.setAdapter(toDoAdapter);
 
-
         // /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\
       }
-
   }
-
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu){
@@ -96,44 +89,4 @@ public class MainActivity extends AppCompatActivity {
     }
     return super.onOptionsItemSelected(item);
   }
-
-
-
-
-
-//
-//   todo  add this stuff to create new
-//  public void addToDoToSharedPreferences(View view){
-//
-//    SharedPreferences sharedPref = getSharedPreferences(TODOES, Context.MODE_PRIVATE);
-//    SharedPreferences.Editor editor = sharedPref.edit();
-//
-//    Gson gson = new Gson();
-//
-//    editor.putString("toDoes", gson.toJson(toDoListStart));
-//    editor.apply();
-   // todo ^^^^^^^^^^^^^^^^^^^^^^^^
-
-   ////// Toast.makeText(MainActivity.this, "stuff added", Toast.LENGTH_LONG).show();
-  //}
-
-
-//  @Override
-//  public boolean onCreateOptionsMenu(Menu menu){
-//    MenuInflater menuInflater = getMenuInflater();
-//    menuInflater.inflate(R.menu.activity_main, menu);
-//    return true;
-//  }
-//
-//  @Override
-//  public boolean onOptionsItemSelected(MenuItem item) {
-//    if (item.getItemId() == R.id.action_favourites){
-//      //TODO start a new activity
-//      Intent intent = new Intent(this, FavouritesActivity.class);
-//      startActivity(intent);
-//      return true;
-//    }
-//    return super.onOptionsItemSelected(item);
-//  }
-
 }

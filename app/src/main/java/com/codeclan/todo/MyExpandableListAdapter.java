@@ -21,12 +21,6 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
   private String[] toDoes;
   public static final String TODOES = "Todoes";
 
-
-
-
-
-
-
   public MyExpandableListAdapter(Context context, String[] toDoes) {
     this.context = context;
     this.toDoes = toDoes;
@@ -67,9 +61,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     return false;
   }
 
-
   //////////////////////////////////////////////
-
 
   @Override
   public View getGroupView(final int groupPosition, boolean isExpanded, View convertView,
@@ -105,8 +97,6 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         }
       }
     });
-
-
     return convertView;
   }
 
@@ -146,10 +136,6 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
         }
       });
-
-
-
-
     return convertView;
   }
 

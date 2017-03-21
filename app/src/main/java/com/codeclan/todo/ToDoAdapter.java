@@ -29,7 +29,6 @@ public class ToDoAdapter extends ArrayAdapter<ToDo> {
     TextView name = (TextView) listItemView.findViewById(R.id.item1);
     name.setText(currentToDo.getName().toString());
 
-
     return listItemView;
 
   }
