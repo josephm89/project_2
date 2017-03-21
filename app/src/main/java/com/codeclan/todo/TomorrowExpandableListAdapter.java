@@ -1,27 +1,26 @@
 package com.codeclan.todo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
-import android.widget.Button;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.util.ArrayList;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.util.ArrayList;
 import java.util.Collections;
 
-public class MyExpandableListAdapter extends BaseExpandableListAdapter {
+public class TomorrowExpandableListAdapter extends BaseExpandableListAdapter {
 
   private Context context;
   private String[] toDoes;
-  public static final String TODAY = "today";
+  public static final String TOMORROW = "tomorrow";
 
-  public MyExpandableListAdapter(Context context, String[] toDoes) {
+  public TomorrowExpandableListAdapter(Context context, String[] toDoes) {
     this.context = context;
     this.toDoes = toDoes;
   }
@@ -79,8 +78,8 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
       @Override
       public void onClick(View v) {
         if (toDoes.length-1>groupPosition) {
-          SharedPreferences sharedPref = context.getSharedPreferences(TODAY, Context.MODE_PRIVATE);
-          String toDoString = sharedPref.getString("today", null);
+          SharedPreferences sharedPref = context.getSharedPreferences(TOMORROW, Context.MODE_PRIVATE);
+          String toDoString = sharedPref.getString("tomorrow", null);
           SharedPreferences.Editor editor = sharedPref.edit();
           Gson gson = new Gson();
 
@@ -90,10 +89,10 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
           Collections.swap(toDoArray, groupPosition, groupPosition + 1);
 
-          editor.putString("today", gson.toJson(toDoArray));
+          editor.putString("tomorrow", gson.toJson(toDoArray));
           editor.apply();
 
-          context.startActivity(new Intent(context, MainActivity.class));
+          context.startActivity(new Intent(context, TomorrowActivity.class));
         }
       }
     });
@@ -103,8 +102,8 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
       @Override
       public void onClick(View v) {
         if (groupPosition!=0) {
-          SharedPreferences sharedPref = context.getSharedPreferences(TODAY, Context.MODE_PRIVATE);
-          String toDoString = sharedPref.getString("today", null);
+          SharedPreferences sharedPref = context.getSharedPreferences(TOMORROW, Context.MODE_PRIVATE);
+          String toDoString = sharedPref.getString("tomorrow", null);
           SharedPreferences.Editor editor = sharedPref.edit();
           Gson gson = new Gson();
 
@@ -114,10 +113,10 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
           Collections.swap(toDoArray, groupPosition, groupPosition - 1);
 
-          editor.putString("today", gson.toJson(toDoArray));
+          editor.putString("tomorrow", gson.toJson(toDoArray));
           editor.apply();
 
-          context.startActivity(new Intent(context, MainActivity.class));
+          context.startActivity(new Intent(context, TomorrowActivity.class));
         }
       }
     });
@@ -142,8 +141,8 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
           String nameToDelete = toDoes[groupPosition];
 
-          SharedPreferences sharedPref1 = context.getSharedPreferences(TODAY,Context.MODE_PRIVATE);
-          String toDoString1 = sharedPref1.getString("today", null);
+          SharedPreferences sharedPref1 = context.getSharedPreferences(TOMORROW,Context.MODE_PRIVATE);
+          String toDoString1 = sharedPref1.getString("tomorrow", null);
           SharedPreferences.Editor editor1 = sharedPref1.edit();
           Gson gson1 = new Gson();
 
@@ -157,9 +156,9 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
           }
 
           toDoArray1.remove(toDelete);
-          editor1.putString("today", gson1.toJson(toDoArray1));
+          editor1.putString("tomorrow", gson1.toJson(toDoArray1));
           editor1.apply();
-          context.startActivity(new Intent(context,MainActivity.class));
+          context.startActivity(new Intent(context,TomorrowActivity.class));
 
         }
       });

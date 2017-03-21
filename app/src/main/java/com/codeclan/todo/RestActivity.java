@@ -52,7 +52,7 @@ public class RestActivity extends AppCompatActivity {
 
         ////////////////////// custom adapter////////////////////////////////////////
         ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        ExpandableListAdapter expandableListAdapter = new MyExpandableListAdapter(this, stringArray);
+        ExpandableListAdapter expandableListAdapter = new RestExpandableListAdapter(this, stringArray);
 
         expandableListView.setAdapter(expandableListAdapter);
 

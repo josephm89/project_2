@@ -52,7 +52,7 @@ public class TomorrowActivity extends AppCompatActivity {
 
         ////////////////////// custom adapter////////////////////////////////////////
         ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        ExpandableListAdapter expandableListAdapter = new MyExpandableListAdapter(this, stringArray);
+        ExpandableListAdapter expandableListAdapter = new TomorrowExpandableListAdapter(this, stringArray);
 
         expandableListView.setAdapter(expandableListAdapter);
 
