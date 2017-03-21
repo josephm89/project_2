@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         editor.putString("toDoes", gson.toJson(toDoArray));
         editor.apply();
-        /////////////////////////////////////////////////////////////
+        ////////////////////////create string array for the adapter/////////////////////////
         int length = toDoArray.size();
         String[] stringArray = new String[length];
         int count = 0;
@@ -54,18 +54,18 @@ public class MainActivity extends AppCompatActivity {
           count++;
           }
         }
-
+        ///////////////////////////////////////////////////////////
         for(String elem : stringArray) {
           Log.d("naa", elem);
         }
-
+        ////////////////////// custom adapter////////////////////////////////////////
         ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
         ExpandableListAdapter expandableListAdapter = new MyExpandableListAdapter(this, stringArray);
 
         expandableListView.setAdapter(expandableListAdapter);
 
 
-    ///////BACKUPPPPP///////////////////////////////////////////////////////
+    ///////BACKUPPPPP///for normal list view adapter//////////////////////////////////
 //        ToDoAdapter toDoAdapter = new ToDoAdapter(this, toDoArray);
 //
 //        ListView listView = (ListView) findViewById(R.id.myListView);
