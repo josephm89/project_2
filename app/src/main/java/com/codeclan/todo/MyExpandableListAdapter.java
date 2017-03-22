@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Button;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -133,6 +136,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
           .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       convertView = layoutInflater.inflate(R.layout.list_item, null);
     }
+      /////////////////////////DELETE BUTTON//////////////////////////////
       Button delete = (Button) convertView.findViewById(R.id.childDelete);
       delete.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -155,35 +159,32 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
         }
       });
-//        //TODO set date to tomorrow
-//      Button delay = (Button) convertView.findViewById(R.id.childDelay);
-//      delay.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View v) {
-//
-//        String nameToDelete = toDoes[groupPosition];
-//
-//        SharedPreferences sharedPref1 = context.getSharedPreferences(TODAY,Context.MODE_PRIVATE);
-//        String toDoString1 = sharedPref1.getString("today", null);
-//        SharedPreferences.Editor editor1 = sharedPref1.edit();
-//        Gson gson1 = new Gson();
-//
-//        TypeToken<ArrayList<ToDo>> ToDoArrayList1 = new TypeToken<ArrayList<ToDo>>() {};
-//        ArrayList<ToDo> toDoArray1 = gson1.fromJson(toDoString1, ToDoArrayList1.getType());
-//        ToDo toDelete = null;
-//        for (ToDo todo: toDoArray1){
-//          if (todo.getName().equals(nameToDelete)){
-//            toDelete = todo;
-//          }
-//        }
-//
-//        //TODO CHANGE DATE;
-//        editor1.putString("today", gson1.toJson(toDoArray1));
-//        editor1.apply();
-//        context.startActivity(new Intent(context,MainActivity.class));
-//
-//      }
-//    });
+      ////////////////////////DELAY BUTTON ////////////////////////////
+      Button delay = (Button) convertView.findViewById(R.id.childResced);
+      delay.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+
+        String nameToCompare = toDoes[groupPosition];
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+        cal.add(Calendar.DATE, 1);
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
+        String newDate = format1.format(cal.getTime());
+
+        for (ToDo todo: toDoArray){
+          if (todo.getName().equals(nameToCompare)){
+            todo.setDueDate(newDate);
+          }
+        }
+
+        editor.putString("today", gson.toJson(toDoArray));
+        editor.apply();
+        context.startActivity(new Intent(context,MainActivity.class));
+
+      }
+    });
     return convertView;
   }
 
