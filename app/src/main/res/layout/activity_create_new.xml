@@ -9,6 +9,24 @@
   android:background="@drawable/bgmain">
 
 
+
+  <TextView
+    android:layout_marginTop="30dp"
+    android:textSize="26dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/isChore"
+    android:textColor="@color/colorPrimary"
+    android:layout_gravity="center_horizontal"/>
+
+  <Spinner
+    android:id="@+id/myspinner"
+    android:layout_width="wrap_content"
+    android:layout_height="30dp"
+    android:textSize="20dp"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/colorPrimary"/>
+
   <TextView
     android:layout_marginTop="30dp"
     android:layout_width="wrap_content"
@@ -27,24 +45,8 @@
     android:inputType="text"
     android:background="@color/colorPrimaryDark"
     android:layout_gravity="center_horizontal"
-     />
+    />
 
-  <TextView
-    android:layout_marginTop="30dp"
-    android:textSize="26dp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/isChore"
-    android:textColor="@color/colorPrimary"
-    android:layout_gravity="center_horizontal"/>
-
-  <CheckBox
-    android:id="@+id/checkbox"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
-    android:shadowColor="#ffffff"
-    android:layout_gravity="center_horizontal"/>
 
   <TextView
     android:layout_marginTop="30dp"

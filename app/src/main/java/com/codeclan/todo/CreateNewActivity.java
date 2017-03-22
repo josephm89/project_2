@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,6 +21,7 @@ import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import java.util.Date;
+import java.util.List;
 
 public class CreateNewActivity extends AppCompatActivity {
 
@@ -30,7 +33,7 @@ public class CreateNewActivity extends AppCompatActivity {
 
   private String newDate, newName;
   private boolean isChore;
-
+  private Spinner spinner;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +45,26 @@ public class CreateNewActivity extends AppCompatActivity {
     year = calendar.get(Calendar.YEAR);
     month = calendar.get(Calendar.MONTH);
     day = calendar.get(Calendar.DAY_OF_MONTH);
-
   //  showDate(year, month+1, day);
+    spinner = (Spinner) findViewById(R.id.myspinner);
+    isChore = false;
+
+    /////////////////////////SPINNER////////////////////
+    List<String> list = new ArrayList<String>();
+
+    list.add("Select");
+    list.add("Do Laundry");
+    list.add("Wash Dishes");
+    list.add("Take Out Trash");
+    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinner.setAdapter(dataAdapter);
+
   }
+
+
+               // "String.valueOf(spinner2.getSelectedItem()),
+
   // \/ \/ \/ \/ \/ Fancy stuff for date picker \/ \/ \/ \/
   @SuppressWarnings("deprecation")
   public void setDate(View view) {
@@ -99,12 +119,14 @@ public class CreateNewActivity extends AppCompatActivity {
 
   public void setToDoName(){
     EditText inputWindow = (EditText)findViewById(R.id.editTextName);
+
     newName = inputWindow.getText().toString();
+    if (newName.equals("")){
+      newName = String.valueOf(spinner.getSelectedItem());
+      isChore = true;
+    }
   }
 
-  public void isChore(){
-
-  }
 
 
 
@@ -134,7 +156,7 @@ public class CreateNewActivity extends AppCompatActivity {
     setToDoName();
     //todo set boolean()
 
-    ToDo toDoToSave = new ToDo(newName,false,newDate);
+    ToDo toDoToSave = new ToDo(newName,isChore,newDate);
 
     SharedPreferences sharedPref = getSharedPreferences(TODAY, Context.MODE_PRIVATE);
     SharedPreferences.Editor editor = sharedPref.edit();
