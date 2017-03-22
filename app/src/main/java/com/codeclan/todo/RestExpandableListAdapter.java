@@ -3,6 +3,7 @@ package com.codeclan.todo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,23 @@ public class RestExpandableListAdapter extends BaseExpandableListAdapter {
   private Context context;
   private String[] toDoes;
   public static final String REST = "rest";
+  public SharedPreferences sharedPref;
+  String toDoString;
+  SharedPreferences.Editor editor;
+  Gson gson;
+  TypeToken<ArrayList<ToDo>> ToDoArrayList;
+  ArrayList<ToDo> toDoArray;
 
   public RestExpandableListAdapter(Context context, String[] toDoes) {
     this.context = context;
     this.toDoes = toDoes;
+    this.sharedPref = context.getSharedPreferences(REST, Context.MODE_PRIVATE);
+    this.toDoString = sharedPref.getString("rest", null);
+    this.editor= sharedPref.edit();
+    this.gson = new Gson();
+    this.ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {
+    };
+    this.toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
   }
 
   @Override
@@ -70,22 +84,34 @@ public class RestExpandableListAdapter extends BaseExpandableListAdapter {
           .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       convertView = layoutInflater.inflate(R.layout.list_group, null);
     }
+    ///////////////////////NAME////////////////////////
     TextView listName = (TextView) convertView.findViewById(R.id.listTitle);
     listName.setText(toDoes[groupPosition]);
 
+
+    ///////////////////////////////////////////
+    //ToDO add conditional colouring
+
+//
+//    for (ToDo todo: toDoArray){
+//      if (Stringarray[groupPosition].equals(todo.getName());
+//      {
+//        if (todo.getDueDate()<today){
+//          listName.setTextColor(Color.parseColor("#f44268"));
+//
+//        }
+//      }
+//    }
+
+
+    //////////////////////////////////////////
+
+    /////////////////////////////DOWN BUTTON////////////////////////
     Button moveDown = (Button) convertView.findViewById(R.id.moveDown);
     moveDown.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         if (toDoes.length-1>groupPosition) {
-          SharedPreferences sharedPref = context.getSharedPreferences(REST, Context.MODE_PRIVATE);
-          String toDoString = sharedPref.getString("rest", null);
-          SharedPreferences.Editor editor = sharedPref.edit();
-          Gson gson = new Gson();
-
-          TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {
-          };
-          ArrayList<ToDo> toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
 
           Collections.swap(toDoArray, groupPosition, groupPosition + 1);
 
@@ -97,32 +123,22 @@ public class RestExpandableListAdapter extends BaseExpandableListAdapter {
       }
     });
 
+    /////////////////////////////UP BUTTON////////////////////////
     Button moveUp = (Button) convertView.findViewById(R.id.moveUp);
     moveUp.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if (groupPosition!=0) {
-          SharedPreferences sharedPref = context.getSharedPreferences(REST, Context.MODE_PRIVATE);
-          String toDoString = sharedPref.getString("rest", null);
-          SharedPreferences.Editor editor = sharedPref.edit();
-          Gson gson = new Gson();
+      if (groupPosition!=0) {
 
-          TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {
-          };
-          ArrayList<ToDo> toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
+        Collections.swap(toDoArray, groupPosition, groupPosition - 1);
 
-          Collections.swap(toDoArray, groupPosition, groupPosition - 1);
+        editor.putString("rest", gson.toJson(toDoArray));
+        editor.apply();
 
-          editor.putString("rest", gson.toJson(toDoArray));
-          editor.apply();
-
-          context.startActivity(new Intent(context, RestActivity.class));
-        }
+        context.startActivity(new Intent(context, RestActivity.class));
+      }
       }
     });
-
-
-
     return convertView;
   }
 
@@ -141,23 +157,18 @@ public class RestExpandableListAdapter extends BaseExpandableListAdapter {
 
           String nameToDelete = toDoes[groupPosition];
 
-          SharedPreferences sharedPref1 = context.getSharedPreferences(REST,Context.MODE_PRIVATE);
-          String toDoString1 = sharedPref1.getString("rest", null);
-          SharedPreferences.Editor editor1 = sharedPref1.edit();
-          Gson gson1 = new Gson();
-
-          TypeToken<ArrayList<ToDo>> ToDoArrayList1 = new TypeToken<ArrayList<ToDo>>() {};
-          ArrayList<ToDo> toDoArray1 = gson1.fromJson(toDoString1, ToDoArrayList1.getType());
           ToDo toDelete = null;
-          for (ToDo todo: toDoArray1){
+          for (ToDo todo: toDoArray){
             if (todo.getName().equals(nameToDelete)){
               toDelete = todo;
             }
           }
 
-          toDoArray1.remove(toDelete);
-          editor1.putString("rest", gson1.toJson(toDoArray1));
-          editor1.apply();
+          toDoArray.remove(toDelete);
+
+          editor.putString("rest", gson.toJson(toDoArray));
+          editor.apply();
+          
           context.startActivity(new Intent(context,RestActivity.class));
 
         }
