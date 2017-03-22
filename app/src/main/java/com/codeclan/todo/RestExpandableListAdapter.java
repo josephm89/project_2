@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -170,6 +171,58 @@ public class RestExpandableListAdapter extends BaseExpandableListAdapter {
           .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       convertView = layoutInflater.inflate(R.layout.list_item, null);
     }
+      ////////////////////////////COMPLETE BUTTON///////////////////////////////
+      Button complete = (Button) convertView.findViewById(R.id.childComplete);
+      complete.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+          String nameToDelete = toDoes[groupPosition];
+
+          ToDo toDelete = null;
+          for (ToDo todo: toDoArray){
+            if (todo.getName().equals(nameToDelete)){
+              toDelete = todo;
+            }
+          }
+
+          toDoArray.remove(toDelete);
+          editor.putString("tomorrow", gson.toJson(toDoArray));
+          editor.apply();
+
+          ///TODO GIVE XP
+          context.startActivity(new Intent(context,TomorrowActivity.class));
+
+        }
+      });
+      ////////////////////////DELAY BUTTON ////////////////////////////
+      Button delay = (Button) convertView.findViewById(R.id.childResced);
+      delay.setText("Do it Today");
+      delay.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+          String nameToCompare = toDoes[groupPosition];
+          Date today = new Date();
+          Calendar cal = Calendar.getInstance();
+          cal.setTime(today);
+          SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
+          String newDate = format1.format(cal.getTime());
+          Log.d("NAAAAAA",newDate);
+
+          for (ToDo todo: toDoArray){
+            if (todo.getName().equals(nameToCompare)){
+              todo.setDueDate(newDate);
+            }
+          }
+
+          editor.putString("rest", gson.toJson(toDoArray));
+          editor.apply();
+          context.startActivity(new Intent(context,MainActivity.class));
+
+        }
+      });
+      //////////////////////////////DELETE BUTTON //////////////////////////
       Button delete = (Button) convertView.findViewById(R.id.childDelete);
       delete.setOnClickListener(new View.OnClickListener() {
         @Override

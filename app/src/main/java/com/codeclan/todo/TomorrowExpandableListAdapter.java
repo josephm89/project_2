@@ -134,8 +134,10 @@ public class TomorrowExpandableListAdapter extends BaseExpandableListAdapter {
           .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       convertView = layoutInflater.inflate(R.layout.list_item, null);
     }
-      Button delete = (Button) convertView.findViewById(R.id.childDelete);
-      delete.setOnClickListener(new View.OnClickListener() {
+
+      /////////////////////////COMPLETE BUTTON ////////////////////////
+      Button complete = (Button) convertView.findViewById(R.id.childComplete);
+      complete.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
@@ -151,12 +153,12 @@ public class TomorrowExpandableListAdapter extends BaseExpandableListAdapter {
           toDoArray.remove(toDelete);
           editor.putString("tomorrow", gson.toJson(toDoArray));
           editor.apply();
+
+          ///TODO GIVE XP
           context.startActivity(new Intent(context,TomorrowActivity.class));
 
         }
       });
-      //todo BUTTON FINISH
-      //todo BUTTON RESCHEDULE
     ////////////////////////DELAY BUTTON ////////////////////////////
     Button delay = (Button) convertView.findViewById(R.id.childResced);
     delay.setText("Do it Today");
@@ -184,7 +186,28 @@ public class TomorrowExpandableListAdapter extends BaseExpandableListAdapter {
 
       }
     });
+    /////////////////////////DELETE BUTTON/////////////////////////////
+    Button delete = (Button) convertView.findViewById(R.id.childDelete);
+    delete.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
 
+        String nameToDelete = toDoes[groupPosition];
+
+        ToDo toDelete = null;
+        for (ToDo todo: toDoArray){
+          if (todo.getName().equals(nameToDelete)){
+            toDelete = todo;
+          }
+        }
+
+        toDoArray.remove(toDelete);
+        editor.putString("tomorrow", gson.toJson(toDoArray));
+        editor.apply();
+        context.startActivity(new Intent(context,TomorrowActivity.class));
+
+      }
+    });
     return convertView;
   }
 

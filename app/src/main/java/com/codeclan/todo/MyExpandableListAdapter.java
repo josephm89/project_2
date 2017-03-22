@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.text.SimpleDateFormat;
@@ -77,19 +78,18 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     return false;
   }
 
+
   //////////////////////////////////////////////
 
   @Override
   public View getGroupView(final int groupPosition, boolean isExpanded, View convertView,
       ViewGroup parent) {
     if(convertView == null) {
-      LayoutInflater layoutInflater = (LayoutInflater) this.context
-          .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+      LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       convertView = layoutInflater.inflate(R.layout.list_group, null);
-    }
+        }
     TextView listName = (TextView) convertView.findViewById(R.id.listTitle);
     listName.setText(toDoes[groupPosition]);
-
 
     Button moveDown = (Button) convertView.findViewById(R.id.moveDown);
     moveDown.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +128,9 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     return convertView;
   }
 
+
+
+
   @Override
   public View getChildView(final int groupPosition, int childPosition, boolean isLastChild,
       View convertView, ViewGroup parent) {
@@ -135,16 +138,18 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
       LayoutInflater layoutInflater = (LayoutInflater) this.context
           .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       convertView = layoutInflater.inflate(R.layout.list_item, null);
-    }
-      /////////////////////////DELETE BUTTON//////////////////////////////
-      Button delete = (Button) convertView.findViewById(R.id.childDelete);
-      delete.setOnClickListener(new View.OnClickListener() {
+
+      }
+      //////////////////////////COMPLETE BUTTON///////////////////////////
+      Button complete = (Button) convertView.findViewById(R.id.childComplete);
+
+      complete.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
           String nameToDelete = toDoes[groupPosition];
-          ToDo toDelete = null;
 
+          ToDo toDelete = null;
           for (ToDo todo: toDoArray){
             if (todo.getName().equals(nameToDelete)){
               toDelete = todo;
@@ -152,10 +157,11 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
           }
 
           toDoArray.remove(toDelete);
-
-          editor.putString("today", gson.toJson(toDoArray));
+          editor.putString("tomorrow", gson.toJson(toDoArray));
           editor.apply();
-          context.startActivity(new Intent(context,MainActivity.class));
+
+          ///TODO GIVE XP
+          context.startActivity(new Intent(context,TomorrowActivity.class));
 
         }
       });
@@ -185,6 +191,29 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
       }
     });
+      /////////////////////////DELETE BUTTON//////////////////////////////
+      Button delete = (Button) convertView.findViewById(R.id.childDelete);
+      delete.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+          String nameToDelete = toDoes[groupPosition];
+          ToDo toDelete = null;
+
+          for (ToDo todo: toDoArray){
+            if (todo.getName().equals(nameToDelete)){
+              toDelete = todo;
+            }
+          }
+
+          toDoArray.remove(toDelete);
+
+          editor.putString("today", gson.toJson(toDoArray));
+          editor.apply();
+          context.startActivity(new Intent(context,MainActivity.class));
+
+        }
+      });
     return convertView;
   }
 
