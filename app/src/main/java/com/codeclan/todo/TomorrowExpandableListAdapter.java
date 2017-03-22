@@ -3,6 +3,7 @@ package com.codeclan.todo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +12,33 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 public class TomorrowExpandableListAdapter extends BaseExpandableListAdapter {
 
   private Context context;
   private String[] toDoes;
   public static final String TOMORROW = "tomorrow";
+  public SharedPreferences sharedPref;
+  String toDoString;
+  SharedPreferences.Editor editor;
+  Gson gson;
+  TypeToken<ArrayList<ToDo>> ToDoArrayList;
+  ArrayList<ToDo> toDoArray;
 
   public TomorrowExpandableListAdapter(Context context, String[] toDoes) {
     this.context = context;
     this.toDoes = toDoes;
+    this.sharedPref = context.getSharedPreferences(TOMORROW, Context.MODE_PRIVATE);
+    this.toDoString = sharedPref.getString("tomorrow", null);
+    this.editor= sharedPref.edit();
+    this.gson = new Gson();
+    this.ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {};
+    this.toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
   }
 
   @Override
@@ -78,14 +94,6 @@ public class TomorrowExpandableListAdapter extends BaseExpandableListAdapter {
       @Override
       public void onClick(View v) {
         if (toDoes.length-1>groupPosition) {
-          SharedPreferences sharedPref = context.getSharedPreferences(TOMORROW, Context.MODE_PRIVATE);
-          String toDoString = sharedPref.getString("tomorrow", null);
-          SharedPreferences.Editor editor = sharedPref.edit();
-          Gson gson = new Gson();
-
-          TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {
-          };
-          ArrayList<ToDo> toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
 
           Collections.swap(toDoArray, groupPosition, groupPosition + 1);
 
@@ -102,14 +110,6 @@ public class TomorrowExpandableListAdapter extends BaseExpandableListAdapter {
       @Override
       public void onClick(View v) {
         if (groupPosition!=0) {
-          SharedPreferences sharedPref = context.getSharedPreferences(TOMORROW, Context.MODE_PRIVATE);
-          String toDoString = sharedPref.getString("tomorrow", null);
-          SharedPreferences.Editor editor = sharedPref.edit();
-          Gson gson = new Gson();
-
-          TypeToken<ArrayList<ToDo>> ToDoArrayList = new TypeToken<ArrayList<ToDo>>() {
-          };
-          ArrayList<ToDo> toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
 
           Collections.swap(toDoArray, groupPosition, groupPosition - 1);
 
@@ -141,29 +141,49 @@ public class TomorrowExpandableListAdapter extends BaseExpandableListAdapter {
 
           String nameToDelete = toDoes[groupPosition];
 
-          SharedPreferences sharedPref1 = context.getSharedPreferences(TOMORROW,Context.MODE_PRIVATE);
-          String toDoString1 = sharedPref1.getString("tomorrow", null);
-          SharedPreferences.Editor editor1 = sharedPref1.edit();
-          Gson gson1 = new Gson();
-
-          TypeToken<ArrayList<ToDo>> ToDoArrayList1 = new TypeToken<ArrayList<ToDo>>() {};
-          ArrayList<ToDo> toDoArray1 = gson1.fromJson(toDoString1, ToDoArrayList1.getType());
           ToDo toDelete = null;
-          for (ToDo todo: toDoArray1){
+          for (ToDo todo: toDoArray){
             if (todo.getName().equals(nameToDelete)){
               toDelete = todo;
             }
           }
 
-          toDoArray1.remove(toDelete);
-          editor1.putString("tomorrow", gson1.toJson(toDoArray1));
-          editor1.apply();
+          toDoArray.remove(toDelete);
+          editor.putString("tomorrow", gson.toJson(toDoArray));
+          editor.apply();
           context.startActivity(new Intent(context,TomorrowActivity.class));
 
         }
       });
       //todo BUTTON FINISH
       //todo BUTTON RESCHEDULE
+    ////////////////////////DELAY BUTTON ////////////////////////////
+    Button delay = (Button) convertView.findViewById(R.id.childResced);
+    delay.setText("Do it Today");
+    delay.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+
+        String nameToCompare = toDoes[groupPosition];
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
+        String newDate = format1.format(cal.getTime());
+        Log.d("NAAAAAA",newDate);
+
+        for (ToDo todo: toDoArray){
+          if (todo.getName().equals(nameToCompare)){
+            todo.setDueDate(newDate);
+          }
+        }
+
+        editor.putString("tomorrow", gson.toJson(toDoArray));
+        editor.apply();
+        context.startActivity(new Intent(context,MainActivity.class));
+
+      }
+    });
 
     return convertView;
   }

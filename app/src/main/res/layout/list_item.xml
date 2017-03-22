@@ -7,25 +7,42 @@
   android:layout_height="wrap_content">
 
 
-
-  <Button
-    android:id="@+id/childComplete"
+  <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryDark"
-    android:text="Complete"/>
+    android:padding="3dp"
+    android:background="@drawable/childborder">
+      <Button
+        android:id="@+id/childComplete"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Complete"/>
+  </LinearLayout>
 
-  <Button
-    android:id="@+id/childResced"
+  <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryDark"
-    android:text="Later"/>
+    android:padding="3dp"
+    android:background="@drawable/childborder">
+      <Button
+        android:id="@+id/childResced"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Later"/>
+  </LinearLayout>
 
-  <Button
-    android:id="@+id/childDelete"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryDark"
-    android:text="Delete"/>
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:padding="3dp"
+      android:background="@drawable/childborder">
+      <Button
+        android:id="@+id/childDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Delete"/>
+    </LinearLayout>
 </LinearLayout>
