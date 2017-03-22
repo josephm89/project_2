@@ -43,6 +43,19 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     this.toDoArray = gson.fromJson(toDoString, ToDoArrayList.getType());
   }
 
+//  public void onGroupExpanded (int groupPosition){
+//    Log.d("expandedd","yeee");
+//
+//    LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//    View root = layoutInflater.inflate(R.layout.list_group, null);
+//// from your example
+//    LinearLayout b = (LinearLayout) root.findViewById(R.id.completeholder);
+//    b.setVisibility(View.GONE);
+//
+//  }
+
+
+
   @Override
   public int getGroupCount() {
     return toDoes.length;
@@ -84,10 +97,11 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
   @Override
   public View getGroupView(final int groupPosition, boolean isExpanded, View convertView,
       ViewGroup parent) {
-    if(convertView == null) {
-      LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    if (convertView == null) {
+      LayoutInflater layoutInflater = (LayoutInflater) this.context
+          .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       convertView = layoutInflater.inflate(R.layout.list_group, null);
-        }
+    }
     TextView listName = (TextView) convertView.findViewById(R.id.listTitle);
     listName.setText(toDoes[groupPosition]);
 
@@ -157,11 +171,11 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
           }
 
           toDoArray.remove(toDelete);
-          editor.putString("tomorrow", gson.toJson(toDoArray));
+          editor.putString("today", gson.toJson(toDoArray));
           editor.apply();
 
           ///TODO GIVE XP
-          context.startActivity(new Intent(context,TomorrowActivity.class));
+          context.startActivity(new Intent(context,MainActivity.class));
 
         }
       });
@@ -223,4 +237,24 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
   public boolean isChildSelectable(int groupPosition, int childPosition) {
     return false;
   }
+//  public void onGroupExpanded (int groupPosition){
+//    Log.d("expanded","yeee");
+//    LayoutInflater layoutInflater = (LayoutInflater) this.context
+//        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//    View view = layoutInflater.inflate(R.layout.list_item, null);
+//    LinearLayout v = (LinearLayout) view.findViewById(R.id.list);
+//    v.setVisibility(View.GONE);
+//  }
+//  public void onGroupCollapsed (int groupPosition){
+//    Log.d("collapsed","yeee");
+//    LayoutInflater layoutInflater = (LayoutInflater) this.context
+//        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//    View view = layoutInflater.inflate(R.layout.list_item, null);
+//    LinearLayout v = (LinearLayout) view.findViewById(R.id.list);
+//    v.setVisibility(View.GONE);
+//  }
+//  public void myFunction(int i){
+//    LinearLayout labelView = (LinearLayout) MainActivity.findViewById(R.id.list);
+//    labelView.setVisibility(View.GONE);
+//  }
 }

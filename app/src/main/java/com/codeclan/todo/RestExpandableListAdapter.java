@@ -187,11 +187,11 @@ public class RestExpandableListAdapter extends BaseExpandableListAdapter {
           }
 
           toDoArray.remove(toDelete);
-          editor.putString("tomorrow", gson.toJson(toDoArray));
+          editor.putString("rest", gson.toJson(toDoArray));
           editor.apply();
 
           ///TODO GIVE XP
-          context.startActivity(new Intent(context,TomorrowActivity.class));
+          context.startActivity(new Intent(context,MainActivity.class));
 
         }
       });
