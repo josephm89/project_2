@@ -2,6 +2,7 @@ package com.codeclan.todo;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.Button;
 import com.google.gson.Gson;
@@ -73,6 +74,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     }
     TextView listName = (TextView) convertView.findViewById(R.id.listTitle);
     listName.setText(toDoes[groupPosition]);
+
 
     Button moveDown = (Button) convertView.findViewById(R.id.moveDown);
     moveDown.setOnClickListener(new View.OnClickListener() {

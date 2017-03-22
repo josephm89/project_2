@@ -12,8 +12,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 public class RestExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -92,16 +96,32 @@ public class RestExpandableListAdapter extends BaseExpandableListAdapter {
     ///////////////////////////////////////////
     //ToDO add conditional colouring
 
-//
-//    for (ToDo todo: toDoArray){
-//      if (Stringarray[groupPosition].equals(todo.getName());
-//      {
-//        if (todo.getDueDate()<today){
-//          listName.setTextColor(Color.parseColor("#f44268"));
-//
-//        }
-//      }
-//    }
+
+    String nameToCompare = toDoes[groupPosition];
+    for (ToDo todo: toDoArray){
+      if (todo.getName().equals(nameToCompare)){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        Date today = calendar.getTime();
+        Date date = null;
+
+        try {
+          SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+          date = dateFormat.parse(todo.getDueDate());
+
+        } catch (ParseException e) {
+          e.printStackTrace();
+        }
+        if (date.before(today)){
+          listName.setTextColor(Color.parseColor("#f44268"));
+
+        }
+      }
+    }
 
 
     //////////////////////////////////////////
@@ -168,7 +188,7 @@ public class RestExpandableListAdapter extends BaseExpandableListAdapter {
 
           editor.putString("rest", gson.toJson(toDoArray));
           editor.apply();
-          
+
           context.startActivity(new Intent(context,RestActivity.class));
 
         }

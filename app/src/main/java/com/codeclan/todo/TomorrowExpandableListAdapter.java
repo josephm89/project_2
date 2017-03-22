@@ -162,6 +162,9 @@ public class TomorrowExpandableListAdapter extends BaseExpandableListAdapter {
 
         }
       });
+      //todo BUTTON FINISH
+      //todo BUTTON RESCHEDULE
+
     return convertView;
   }
 
